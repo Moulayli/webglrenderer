@@ -1,6 +1,21 @@
-@import url("debugger.css");
+@import url(crosshair.css);
 
 body {
+	height: 100vh;
 	margin: 0;
-	overflow: hidden;
+	background-color: #000;
+}
+
+main {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+}
+
+canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
 }

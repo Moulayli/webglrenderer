@@ -1,2 +1,2 @@
-Vanilla JavaScript 3D rendering engine, inspired by THREE.js.  
+WebGL2 3D rendering engine.  
 https://matteokeole.github.io/jsrenderer
