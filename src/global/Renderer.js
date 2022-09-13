@@ -1,6 +1,6 @@
-import {loadShader, parseLocations, render} from "../utils/index.js";
+import {Matrix4, loadShader, parseLocations, renderMesh} from "../index.js";
 
-export const Renderer = function(width, height, options) {
+export function Renderer(width, height, options) {
 	options = Object.entries(options);
 
 	this.canvas = document.createElement("canvas");
@@ -42,8 +42,6 @@ export const Renderer = function(width, height, options) {
 	this.stretch(width, height);
 
 	this.locked = false;
-
-	this.clear = () => this.gl.clear(0, 0, 0, 0);
 
 	return this;
 };
@@ -101,10 +99,6 @@ Renderer.prototype.isLocked = function() {
 	return this.canvas === document.pointerLockElement;
 };
 
-Renderer.prototype.render = function(scene, camera) {
-	render.call(this, scene, camera);
-};
-
 Renderer.prototype.stretch = function(width = innerWidth, height = innerHeight) {
 	this.width = width;
 	this.height = height;
@@ -113,4 +107,41 @@ Renderer.prototype.stretch = function(width = innerWidth, height = innerHeight) 
 	this.canvas.height = this.height;
 
 	this.gl.viewport(0, 0, this.width, this.height);
+};
+
+Renderer.prototype.render = function(scene, camera) {
+	const {gl} = this;
+
+	gl.clearColor(...scene.background.hex1);
+	gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+	const viewProjectionMatrix = camera.projectionMatrix
+		.multiplyMatrix4(Matrix4.createTranslationMatrix(camera.distance.invert())) // Pivot point
+		.multiplyMatrix4(Matrix4.createRotationMatrix(-camera.rotation.x, "x")) // X rotation
+		.multiplyMatrix4(Matrix4.createRotationMatrix(camera.rotation.y, "y")) // Y rotation
+		.multiplyMatrix4(Matrix4.createTranslationMatrix(camera.position.multiply(camera.lhcs))); // Translation
+
+	// Render meshes
+	for (const mesh of scene.meshes) {
+		mesh.visible && renderMesh(gl, mesh, camera, this.primitiveType, viewProjectionMatrix);
+	}
+
+	// Render average light value
+	let averageLightColor = [0, 0, 0, 0],
+		visibleLights = 0;
+
+	for (const light of scene.lights) {
+		if (light.visible && light.intensity) {
+			visibleLights++;
+			averageLightColor[0] += light.value[3] * light.value[0];
+			averageLightColor[1] += light.value[3] * light.value[1];
+			averageLightColor[2] += light.value[3] * light.value[2];
+			averageLightColor[3] += light.value[3];
+
+			light.position && gl.uniform3fv(gl.uniform.lightWorldPos, light.position.xyz());
+		}
+	}
+
+	averageLightColor = averageLightColor.map(i => i / visibleLights);
+	gl.uniform4fv(gl.uniform.lightColor, averageLightColor);
 };

@@ -1,14 +1,14 @@
 /**
  * 4x4 matrix class.
  * 
- * @todo	Add multiply() and invert()
+ * @todo	Add multiply()
+ * @todo    Add invert()
  * 
  * @class
  * @extends	Array
  * @param	{...number}	[elements=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]	Matrix elements
- * @returns	{Matrix4}
  */
-class Matrix4 extends Array {
+export class Matrix4 extends Array {
 	constructor(...elements) {
 		16 !== elements.length ?
 			super(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) :
@@ -35,13 +35,16 @@ class Matrix4 extends Array {
 	 */
 	transpose() {
 		const e = this;
+		let _;
 
-		return new Matrix4(
-			e[0],  e[4],  e[8],  e[12],
-			e[1],  e[5],  e[9],  e[13],
-			e[2],  e[6],  e[10], e[14],
-			e[3],  e[7],  e[11], e[15],
-		);
+		_ = e[1]; e[1] = e[4]; e[4] = _;
+		_ = e[2]; e[2] = e[8]; e[8] = _;
+		_ = e[3]; e[3] = e[12]; e[12] = _;
+		_ = e[6]; e[6] = e[9]; e[9] = _;
+		_ = e[7]; e[7] = e[13]; e[13] = _;
+		_ = e[11]; e[11] = e[14]; e[14] = _;
+
+		return this;
 	}
 }
 
@@ -77,11 +80,11 @@ Matrix4.translation = v => {
 /**
  * Creates a rotation matrix for the X axis.
  * 
- * @param	{number}	theta
+ * @param	{number}	a
  * @returns	{Matrix4}
  */
-Matrix4.rotationX = theta => {
-	const s = Math.sin(theta), c = Math.cos(theta);
+Matrix4.rotationX = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		1,  0,  0,  0,
@@ -94,11 +97,11 @@ Matrix4.rotationX = theta => {
 /**
  * Creates a rotation matrix for the Y axis.
  * 
- * @param	{number}	theta
+ * @param	{number}	a
  * @returns	{Matrix4}
  */
-Matrix4.rotationY = theta => {
-	const s = Math.sin(theta), c = Math.cos(theta);
+Matrix4.rotationY = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		c,  0, -s,  0,
@@ -111,11 +114,11 @@ Matrix4.rotationY = theta => {
 /**
  * Creates a rotation matrix for the Z axis.
  * 
- * @param	{number}	theta
+ * @param	{number}	a
  * @returns	{Matrix4}
  */
-Matrix4.rotationZ = theta => {
-	const s = Math.sin(theta), c = Math.cos(theta);
+Matrix4.rotationZ = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		c,  s,  0,  0,
