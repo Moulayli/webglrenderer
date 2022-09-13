@@ -28,21 +28,19 @@ export class Matrix4 extends Array {
 	}
 
 	/**
-	 * Transposes this matrix.
-	 * Transposition is the swapping of the rows and columns of a matrix.
+	 * Transposes this matrix: swaps its rows and its columns.
 	 * 
-	 * @returns	{Matrix4}
+	 * @returns	{self}
 	 */
 	transpose() {
 		const e = this;
-		let _;
 
-		_ = e[1]; e[1] = e[4]; e[4] = _;
-		_ = e[2]; e[2] = e[8]; e[8] = _;
-		_ = e[3]; e[3] = e[12]; e[12] = _;
-		_ = e[6]; e[6] = e[9]; e[9] = _;
-		_ = e[7]; e[7] = e[13]; e[13] = _;
-		_ = e[11]; e[11] = e[14]; e[14] = _;
+		[e[1], e[4]]	= [e[4], e[1]];
+		[e[2], e[8]]	= [e[8], e[2]];
+		[e[3], e[12]]	= [e[12], e[3]];
+		[e[6], e[9]]	= [e[9], e[6]];
+		[e[7], e[13]]	= [e[13], e[7]];
+		[e[11], e[14]]	= [e[14], e[11]];
 
 		return this;
 	}
@@ -80,11 +78,11 @@ Matrix4.translation = v => {
 /**
  * Creates a rotation matrix for the X axis.
  * 
- * @param	{number}	a
+ * @param	{number}	t
  * @returns	{Matrix4}
  */
-Matrix4.rotationX = a => {
-	const s = Math.sin(a), c = Math.cos(a);
+Matrix4.rotationX = t => {
+	const s = Math.sin(t), c = Math.cos(t);
 
 	return new Matrix4(
 		1,  0,  0,  0,
@@ -97,11 +95,11 @@ Matrix4.rotationX = a => {
 /**
  * Creates a rotation matrix for the Y axis.
  * 
- * @param	{number}	a
+ * @param	{number}	t
  * @returns	{Matrix4}
  */
-Matrix4.rotationY = a => {
-	const s = Math.sin(a), c = Math.cos(a);
+Matrix4.rotationY = t => {
+	const s = Math.sin(t), c = Math.cos(t);
 
 	return new Matrix4(
 		c,  0, -s,  0,
@@ -114,11 +112,11 @@ Matrix4.rotationY = a => {
 /**
  * Creates a rotation matrix for the Z axis.
  * 
- * @param	{number}	a
+ * @param	{number}	t
  * @returns	{Matrix4}
  */
-Matrix4.rotationZ = a => {
-	const s = Math.sin(a), c = Math.cos(a);
+Matrix4.rotationZ = t => {
+	const s = Math.sin(t), c = Math.cos(t);
 
 	return new Matrix4(
 		c,  s,  0,  0,
