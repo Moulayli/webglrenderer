@@ -2,14 +2,10 @@ import {Mesh, BoxGeometry, PlaneGeometry, Material, Texture, Color, AmbientLight
 import {scene, camera} from "./main.js";
 
 export default () => {
-	scene.background = new Color(0x5b4428);
-
 	// Light
 	{
-		light = new AmbientLight(0xfefebe, 1.1);
-		// light = new PointLight(0xfefebe, 1.1);
-		// light.position.set(-4.4, 3.3, -4.4);
-		// light.position.set(0, 3.3, 0);
+		light = new PointLight(0xfefebe, 1.1);
+		light.position.set(-4.4, 3.3, -4.4);
 	}
 
 	// Floor
@@ -18,57 +14,43 @@ export default () => {
 			new PlaneGeometry(12, 12),
 			new Material({texture: new Texture("tilefloor018a.jpg")}),
 		);
-		floor.geometry.uvs = new Float32Array([
-			0.3375 * floor.geometry.height, 0, 0.3375 * floor.geometry.height,
-			0.3375 * floor.geometry.width, 0, 0.3375 * floor.geometry.width,
-		]);
+		floor.rotation.y = -Math.PI / 2; // Rotate the texture
+		floor.geometry.uvs = setPlaneUVs(floor.geometry.width, floor.geometry.height, .3375);
 	}
 
 	// Walls
 	{
 		wall1 = new Mesh(
-			new PlaneGeometry(4, 12),
+			new PlaneGeometry(12, 4),
 			new Material({texture: new Texture("plasterwall030c.jpg")}),
 		);
 		wall1.position.set(0, 2, 6);
-		wall1.rotation.set(0, Math.PI / 2, Math.PI / 2);
-		wall1.geometry.uvs = new Float32Array([
-			.25 * wall1.geometry.height, 0, .25 * wall1.geometry.height,
-			.25 * wall1.geometry.width, 0, .25 * wall1.geometry.width,
-		]);
+		wall1.rotation.x = -Math.PI / 2;
+		wall1.geometry.uvs = setPlaneUVs(wall1.geometry.width, wall1.geometry.height, .25);
 
 		wall2 = new Mesh(
-			new PlaneGeometry(4, 12),
+			new PlaneGeometry(12, 4),
 			new Material({texture: new Texture("plasterwall030c.jpg")}),
 		);
 		wall2.position.set(6, 2, 0);
-		wall2.rotation.set(0, Math.PI, Math.PI / 2);
-		wall2.geometry.uvs = new Float32Array([
-			.25 * wall2.geometry.height, 0, .25 * wall2.geometry.height,
-			.25 * wall2.geometry.width, 0, .25 * wall2.geometry.width,
-		]);
+		wall2.rotation.set(-Math.PI / 2, 0, -Math.PI / 2);
+		wall2.geometry.uvs = setPlaneUVs(wall2.geometry.width, wall2.geometry.height, .25);
 
 		wall3 = new Mesh(
-			new PlaneGeometry(4, 12),
+			new PlaneGeometry(12, 4),
 			new Material({texture: new Texture("plasterwall030c.jpg")}),
 		);
-		wall3.position.set(0, 2, -6);
-		wall3.rotation.set(0, -Math.PI / 2, Math.PI / 2);
-		wall3.geometry.uvs = new Float32Array([
-			.25 * wall3.geometry.height, 0, .25 * wall3.geometry.height,
-			.25 * wall3.geometry.width, 0, .25 * wall3.geometry.width,
-		]);
+		wall3.position.set(-6, 2, 0);
+		wall3.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
+		wall3.geometry.uvs = setPlaneUVs(wall3.geometry.width, wall3.geometry.height, .25);
 
 		wall4 = new Mesh(
-			new PlaneGeometry(4, 12),
+			new PlaneGeometry(12, 4),
 			new Material({texture: new Texture("plasterwall030c.jpg")}),
 		);
-		wall4.position.set(-6, 2, 0);
-		wall4.rotation.set(0, 0, Math.PI / 2);
-		wall4.geometry.uvs = new Float32Array([
-			.25 * wall4.geometry.height, 0, .25 * wall4.geometry.height,
-			.25 * wall4.geometry.width, 0, .25 * wall4.geometry.width,
-		]);
+		wall4.position.set(0, 2, -6);
+		wall4.rotation.set(-Math.PI / 2, 0, Math.PI);
+		wall4.geometry.uvs = setPlaneUVs(wall4.geometry.width, wall4.geometry.height, .25);
 	}
 
 	// Ceiling
@@ -78,57 +60,62 @@ export default () => {
 			new Material({texture: new Texture("woodfloor007a.jpg")}),
 		);
 		ceiling.position.y = 4;
-		ceiling.rotation.x = Math.PI;
-		ceiling.geometry.uvs = new Float32Array([
-			0.3375 * ceiling.geometry.height, 0, 0.3375 * ceiling.geometry.height,
-			0.3375 * ceiling.geometry.width, 0, 0.3375 * ceiling.geometry.width,
-		]);
+		ceiling.rotation.set(Math.PI, -Math.PI / 2, 0); // Rotate the texture
+		ceiling.geometry.uvs = setPlaneUVs(ceiling.geometry.width, ceiling.geometry.height, .3375);
 	}
 
 	// Cube
 	{
 		cube = new Mesh(
-			new BoxGeometry(2),
+			new BoxGeometry(1.7),
 			// new Material({color: new Color(0xff9800)}),
 			new Material({texture: new Texture("noodles.jpg")}),
 		);
-		// cube.position.set(3, .85, 4);
-		cube.position.set(0, 1.5, 4);
-		// cube.rotation.y = Math.PI / 2;
+		cube.position.set(2.7, .85, 3.3);
+		cube.rotation.y = -Math.PI / 7;
 		cube.geometry.uvs = new Float32Array([
-			// select the top left image
-			0   , 0  ,
-			0.25, 0  ,
-			0   , 0.5,
+			// Front
+			0,    0,
+			0.25, 0,
+			0,    0.5,
 			0.25, 0.5,
-			// select the top middle image
-			0.25, 0  ,
-			0.5 , 0  ,
+			// Back
+			0.5,  0,
+			0.25, 0,
+			0.5,  0.5,
 			0.25, 0.5,
-			0.5 , 0.5,
-			// select to top right image
-			0.5 , 0  ,
-			0.75, 0  ,
-			0.5 , 0.5,
+			// Left
+			0,    0.5,
+			0.25, 0.5,
+			0,    1,
+			0.25, 1,
+			// Right
+			0.5,  0,
+			0.75, 0,
+			0.5,  0.5,
 			0.75, 0.5,
-			// select the bottom left image
-			0   , 0.5,
+			// Top
+			0.5,  0.5,
 			0.25, 0.5,
-			0   , 1  ,
-			0.25, 1  ,
-			// select the bottom middle image
-			0.25, 0.5,
-			0.5 , 0.5,
-			0.25, 1  ,
-			0.5 , 1  ,
-			// select the bottom right image
-			0.5 , 0.5,
+			0.5,  1,
+			0.25, 1,
+			// Bottom
+			0.5,  0.5,
 			0.75, 0.5,
-			0.5 , 1  ,
-			0.75, 1  ,
+			0.5,  1,
+			0.75, 1,
 		]);
 	}
 
 	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling, cube);
 };
 export let light, floor, wall1, wall2, wall3, wall4, ceiling, cube;
+
+function setPlaneUVs(w, h, n) {
+	return new Float32Array([
+		0,     0,
+		n * w, 0,
+		0,     n * h,
+		n * w, n * h,
+	]);
+}

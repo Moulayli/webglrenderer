@@ -4,20 +4,13 @@ import init from "./init.js";
 import loop from "./loop.js";
 
 /**
+ * Controls
  * [W]			Walk forward
  * [S]			Walk backward
  * [A]			Strafe left
  * [D]			Strafe right
  * [Space]		Fly up
  * [LeftCtrl]	Fly down
- * 
- * @see {@link https://github.com/matteokeole/jsrenderer/tree/webgl}
- * @see {@link https://www.youtube.com/watch?v=lCSNhq1oAFo&t=51s}
- * @see {@link https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_on_the_web}
- * @see {@link https://www.sitepoint.com/building-3d-engine-javascript}
- * @see {@link https://www.youtube.com/watch?v=OVQxTNd2U3w&t=1220s}
- * @see {@link https://stackoverflow.com/questions/4097688/draw-distorted-image-on-html5s-canvas}
- * @see {@link https://www.mamboleoo.be/articles/how-to-render-3d-in-2d-canvas}
  */
 export const
 	keys		= new Set(),

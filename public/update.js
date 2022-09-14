@@ -13,7 +13,7 @@ export default () => {
 	keys.has(Keybind.up)		&& camera.moveUp(v);
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
-	// cube.rotation.y -= 0.01;
+	cube.rotation.y -= 0.01;
 
 	renderer.render(scene, camera);
 };
