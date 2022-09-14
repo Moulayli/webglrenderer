@@ -18,5 +18,5 @@ void main() {
 	float light = dot(normal, surfaceToLightDir);
 
 	fragColor = u_lightColor * (u_color * texture(u_texture, v_uv));
-	fragColor.rgb *= light * u_lightColor.a;
+	fragColor.rgb *= u_lightColor.a;
 }

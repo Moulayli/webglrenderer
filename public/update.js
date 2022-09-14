@@ -3,6 +3,7 @@ import {renderer, scene, camera, keys} from "./main.js";
 import {cube} from "./init.js";
 
 export default () => {
+	// Cancel diagonal movement addition
 	v = VELOCITY * ((keys.has(Keybind.forward) || keys.has(Keybind.backward)) && (keys.has(Keybind.left) || keys.has(Keybind.right)) ? Math.SQRT1_2 : 1);
 
 	keys.has(Keybind.forward)	&& camera.moveForward(v);
@@ -12,7 +13,7 @@ export default () => {
 	keys.has(Keybind.up)		&& camera.moveUp(v);
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
-	cube.rotation.y -= 0.01;
+	// cube.rotation.y -= 0.01;
 
 	renderer.render(scene, camera);
 };

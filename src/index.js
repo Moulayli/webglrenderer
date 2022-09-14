@@ -9,4 +9,4 @@ export {Color, Material, Mesh, Renderer, Scene, Texture} from "./global/index.js
 export {AmbientLight, DirectionalLight, PointLight} from "./lights/index.js";
 export {TextureLoader} from "./loaders/index.js";
 export {Matrix4, Vector2, Vector3} from "./math/index.js";
-export {loadShader, parseLocations, projectOrthogonal, renderLight, renderMesh} from "./utils/index.js";
+export {clamp, lerp, loadShader, parseLocations, projectOrthogonal, renderLight, renderMesh} from "./utils/index.js";

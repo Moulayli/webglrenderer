@@ -1,4 +1,4 @@
-import {SENSITIVITY_X, SENSITIVITY_Y, Matrix4, Vector3} from "../index.js";
+import {SENSITIVITY_X, SENSITIVITY_Y, clamp, Matrix4, Vector3} from "../index.js";
 
 export function PerspectiveCamera(fov = 60, aspect = innerWidth / innerHeight, near = 1, far = 1000) {
 	Object.assign(this, {
@@ -30,8 +30,6 @@ export function PerspectiveCamera(fov = 60, aspect = innerWidth / innerHeight, n
 		this.rotation.y += y;
 	};
 
-	// this.meshes = new Set();
-
 	this.updateProjectionMatrix();
 
 	return this;
@@ -45,10 +43,6 @@ PerspectiveCamera.prototype.moveForward = function(n) {
 	);
 
 	this.position = this.position.add(direction.multiplyScalar(n));
-
-	/*for (const mesh of this.meshes) {
-		mesh.position.set(this.position);
-	}*/
 };
 
 PerspectiveCamera.prototype.moveRight = function(n) {
@@ -59,10 +53,6 @@ PerspectiveCamera.prototype.moveRight = function(n) {
 	);
 
 	this.position = this.position.add(direction.multiplyScalar(n));
-
-	/*for (const mesh of this.meshes) {
-		mesh.position.set(this.position);
-	}*/
 };
 
 PerspectiveCamera.prototype.moveUp = function(n) {
@@ -83,7 +73,7 @@ PerspectiveCamera.prototype.updateProjectionMatrix = function() {
 	]);
 };
 
-PerspectiveCamera.prototype.lookAt = function(pos, target) {
+/*PerspectiveCamera.prototype.lookAt = function(pos, target) {
 	const
 		az = pos.clone().substract(target).normalize(),
 		ax = this.up.cross(az).normalize(),
@@ -95,12 +85,4 @@ PerspectiveCamera.prototype.lookAt = function(pos, target) {
 		az.x,  az.y,  az.z,  0,
 		pos.x, pos.y, pos.z, 1,
 	]);
-};
-
-/*PerspectiveCamera.prototype.attach = function(...meshes) {
-	for (const mesh of meshes) this.meshes.add(mesh);
-};*/
-
-/*PerspectiveCamera.prototype.detach = function(...meshes) {
-	for (const mesh of meshes) this.meshes.delete(mesh);
 };*/

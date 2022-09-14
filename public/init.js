@@ -1,11 +1,15 @@
-import {Mesh, BoxGeometry, PlaneGeometry, Material, Texture, Color, PointLight} from "../src/index.js";
-import {scene} from "./main.js";
+import {Mesh, BoxGeometry, PlaneGeometry, Material, Texture, Color, AmbientLight, PointLight} from "../src/index.js";
+import {scene, camera} from "./main.js";
 
 export default () => {
+	scene.background = new Color(0x5b4428);
+
 	// Light
 	{
-		light = new PointLight(0xfefebe, 1.1);
-		light.position.set(-4.4, 3.3, -4.4);
+		light = new AmbientLight(0xfefebe, 1.1);
+		// light = new PointLight(0xfefebe, 1.1);
+		// light.position.set(-4.4, 3.3, -4.4);
+		// light.position.set(0, 3.3, 0);
 	}
 
 	// Floor
@@ -84,10 +88,45 @@ export default () => {
 	// Cube
 	{
 		cube = new Mesh(
-			new BoxGeometry(1.7),
-			new Material({color: new Color(0xff9800)}),
+			new BoxGeometry(2),
+			// new Material({color: new Color(0xff9800)}),
+			new Material({texture: new Texture("noodles.jpg")}),
 		);
-		cube.position.set(3, .85, 4);
+		// cube.position.set(3, .85, 4);
+		cube.position.set(0, 1.5, 4);
+		// cube.rotation.y = Math.PI / 2;
+		cube.geometry.uvs = new Float32Array([
+			// select the top left image
+			0   , 0  ,
+			0.25, 0  ,
+			0   , 0.5,
+			0.25, 0.5,
+			// select the top middle image
+			0.25, 0  ,
+			0.5 , 0  ,
+			0.25, 0.5,
+			0.5 , 0.5,
+			// select to top right image
+			0.5 , 0  ,
+			0.75, 0  ,
+			0.5 , 0.5,
+			0.75, 0.5,
+			// select the bottom left image
+			0   , 0.5,
+			0.25, 0.5,
+			0   , 1  ,
+			0.25, 1  ,
+			// select the bottom middle image
+			0.25, 0.5,
+			0.5 , 0.5,
+			0.25, 1  ,
+			0.5 , 1  ,
+			// select the bottom right image
+			0.5 , 0.5,
+			0.75, 0.5,
+			0.5 , 1  ,
+			0.75, 1  ,
+		]);
 	}
 
 	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling, cube);
