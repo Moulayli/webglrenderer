@@ -1,6 +1,5 @@
 import {Color} from "../index.js";
 
-/** @todo */
 export function Scene() {
 	this.background	= new Color(0x000000);
 	this.objects	= new Set();
@@ -11,7 +10,6 @@ export function Scene() {
 	return this;
 };
 
-/** @todo */
 Scene.prototype.add = function(...objects) {
 	for (const object of objects) {
 		this.objects.add(object);
@@ -26,7 +24,6 @@ Scene.prototype.add = function(...objects) {
 	return this;
 };
 
-/** @todo */
 Scene.prototype.remove = function(...objects) {
 	for (const object of objects) {
 		this.objects.delete(object);

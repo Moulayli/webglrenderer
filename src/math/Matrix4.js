@@ -1,3 +1,4 @@
+/** This class will be replaced by that of the Matrix4b.js file. */
 export function Matrix4(m = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) {
 	this.data = m;
 

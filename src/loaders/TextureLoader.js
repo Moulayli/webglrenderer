@@ -1,7 +1,7 @@
 import {TEXTURES, TEXTURE_PATH} from "../index.js";
 
 /**
- * Asynchronous texture loader.
+ * Utility class for loading textures asynchronously.
  * 
  * @constructor
  * @param	{boolean}	[logs=false]	Whether to display advancement logs in the console

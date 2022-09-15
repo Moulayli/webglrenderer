@@ -12,8 +12,10 @@ import loop from "./loop.js";
  * [Space]		Fly up
  * [LeftCtrl]	Fly down
  * 
- * @todo    Add Matrix4b.multiply()
- * @todo    Add Matrix4b.invert()
+ * @todo	Matrix4b: add multiply()
+ * @todo	Matrix4b: add invert()
+ * @todo	Vector2 update
+ * @todo	Vector3 update
  */
 export const
 	keys		= new Set(),
@@ -22,7 +24,7 @@ export const
 		DEPTH_TEST: true,
 	}),
 	scene		= new Scene(),
-    camera      = new PerspectiveCamera(90, 1, .1, 100),
+	camera		= new PerspectiveCamera(90, 1, .1, 100),
 	loader		= new TextureLoader(),
 	sources		= await (await fetch("public/textures.json")).json();
 

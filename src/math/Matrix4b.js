@@ -4,12 +4,12 @@
  * @see		{@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}
  * @class
  * @extends	Array
- * @param	{...number}	[elements=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]	Matrix elements
+ * @param	{...number}	[elements]	Matrix content (filled with zeros by default)
  */
 export class Matrix4 extends Array {
 	constructor(...elements) {
 		16 !== elements.length ?
-			super(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0) :
+			super(...Array(16).fill(0)) :
 			super(...elements);
 	}
 
