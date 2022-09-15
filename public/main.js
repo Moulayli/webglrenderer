@@ -11,6 +11,9 @@ import loop from "./loop.js";
  * [D]			Strafe right
  * [Space]		Fly up
  * [LeftCtrl]	Fly down
+ * 
+ * @todo    Add Matrix4b.multiply()
+ * @todo    Add Matrix4b.invert()
  */
 export const
 	keys		= new Set(),

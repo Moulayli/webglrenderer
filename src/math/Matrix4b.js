@@ -1,9 +1,7 @@
 /**
  * 4x4 matrix class.
  * 
- * @todo	Add multiply()
- * @todo    Add invert()
- * 
+ * @see		{@link https://en.wikipedia.org/wiki/Matrix_(mathematics)}
  * @class
  * @extends	Array
  * @param	{...number}	[elements=0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]	Matrix elements
@@ -30,6 +28,7 @@ export class Matrix4 extends Array {
 	/**
 	 * Transposes this matrix: swaps its rows and its columns.
 	 * 
+	 * @see		{@link https://en.wikipedia.org/wiki/Transpose}
 	 * @returns	{self}
 	 */
 	transpose() {
@@ -49,6 +48,7 @@ export class Matrix4 extends Array {
 /**
  * Creates an identity matrix.
  * 
+ * @see		{@link https://en.wikipedia.org/wiki/Identity_matrix}
  * @returns	{Matrix4}
  */
 Matrix4.identity = () => new Matrix4(
@@ -61,7 +61,8 @@ Matrix4.identity = () => new Matrix4(
 /**
  * Creates a translation matrix.
  * 
- * @param	{Vector3}	v
+ * @see		{@link https://en.wikipedia.org/wiki/Transformation_matrix}
+ * @param	{Vector3}	v	Translation vector
  * @returns	{Matrix4}
  */
 Matrix4.translation = v => {
@@ -78,11 +79,12 @@ Matrix4.translation = v => {
 /**
  * Creates a rotation matrix for the X axis.
  * 
- * @param	{number}	t
+ * @see		{@link https://en.wikipedia.org/wiki/Rotation_matrix}
+ * @param	{number}	a	Angle in radians
  * @returns	{Matrix4}
  */
-Matrix4.rotationX = t => {
-	const s = Math.sin(t), c = Math.cos(t);
+Matrix4.rotationX = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		1,  0,  0,  0,
@@ -95,11 +97,12 @@ Matrix4.rotationX = t => {
 /**
  * Creates a rotation matrix for the Y axis.
  * 
- * @param	{number}	t
+ * @see		{@link https://en.wikipedia.org/wiki/Rotation_matrix}
+ * @param	{number}	a	Angle in radians
  * @returns	{Matrix4}
  */
-Matrix4.rotationY = t => {
-	const s = Math.sin(t), c = Math.cos(t);
+Matrix4.rotationY = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		c,  0, -s,  0,
@@ -112,11 +115,12 @@ Matrix4.rotationY = t => {
 /**
  * Creates a rotation matrix for the Z axis.
  * 
- * @param	{number}	t
+ * @see		{@link https://en.wikipedia.org/wiki/Rotation_matrix}
+ * @param	{number}	a	Angle in radians
  * @returns	{Matrix4}
  */
-Matrix4.rotationZ = t => {
-	const s = Math.sin(t), c = Math.cos(t);
+Matrix4.rotationZ = a => {
+	const s = Math.sin(a), c = Math.cos(a);
 
 	return new Matrix4(
 		c,  s,  0,  0,
@@ -129,7 +133,7 @@ Matrix4.rotationZ = t => {
 /**
  * Creates a scale matrix.
  * 
- * @param	{Vector3}	v
+ * @param	{Vector3}	v	Scale vector
  * @returns	{Matrix4}
  */
 Matrix4.scale = v => {
