@@ -1,4 +1,4 @@
-import {keys, renderer, camera} from "./main.js";
+import {renderer, camera, keys} from "./main.js";
 
 const
 	pressKeys = e => {
@@ -11,16 +11,17 @@ const
 
 		keys.delete(e.code);
 	},
+	lookAround = e => camera.lookAround(e),
 	pointerLockChange = () => {
-		// Check if the cursor is locked on this renderer
+		// Check if the renderer is focused
 		if (renderer.isLocked()) {
 			addEventListener("keydown", pressKeys);
 			addEventListener("keyup", releaseKeys);
-			addEventListener("mousemove", camera.lookAround);
+			addEventListener("mousemove", lookAround);
 		} else {
 			removeEventListener("keydown", pressKeys);
 			removeEventListener("keyup", releaseKeys);
-			removeEventListener("mousemove", camera.lookAround);
+			removeEventListener("mousemove", lookAround);
 
 			keys.clear();
 		}
@@ -29,7 +30,7 @@ const
 addEventListener("resize", () => {
 	renderer.stretch();
 
-	// Update aspect ratio
+	// Update camera aspect ratio
 	camera.aspect = renderer.width / renderer.height;
 	camera.updateProjectionMatrix();
 });

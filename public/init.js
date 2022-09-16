@@ -1,7 +1,11 @@
-import {Mesh, BoxGeometry, PlaneGeometry, Material, Texture, Color, AmbientLight, PointLight} from "../src/index.js";
-import {scene, camera} from "./main.js";
+import {BoxGeometry, Material, Mesh, PlaneGeometry, PointLight, Texture} from "../src/index.js";
+import {scene} from "./main.js";
 
 export default () => {
+	const normalMap = "plasterwall034f_normal.jpg";
+	// plasterwall034f
+	// plasterwall034f_normal
+
 	// Light
 	{
 		light = new PointLight(0xfefebe, 1.1);
@@ -12,7 +16,10 @@ export default () => {
 	{
 		floor = new Mesh(
 			new PlaneGeometry(12, 12),
-			new Material({texture: new Texture("tilefloor018a.jpg")}),
+			new Material({
+				texture: new Texture("tilefloor018a.jpg"),
+				// normalMap: new Texture(normal),
+			}),
 		);
 		floor.rotation.y = -Math.PI / 2; // Rotate the texture
 		floor.geometry.uvs = setPlaneUVs(floor.geometry.width, floor.geometry.height, .3375);
@@ -22,7 +29,10 @@ export default () => {
 	{
 		wall1 = new Mesh(
 			new PlaneGeometry(12, 4),
-			new Material({texture: new Texture("plasterwall030c.jpg")}),
+			new Material({
+				texture: new Texture("plasterwall034f.jpg"),
+				// normalMap: new Texture(normalMap),
+			}),
 		);
 		wall1.position.set(0, 2, 6);
 		wall1.rotation.x = -Math.PI / 2;
@@ -30,7 +40,10 @@ export default () => {
 
 		wall2 = new Mesh(
 			new PlaneGeometry(12, 4),
-			new Material({texture: new Texture("plasterwall030c.jpg")}),
+			new Material({
+				texture: new Texture("plasterwall034f.jpg"),
+				// normalMap: new Texture(normalMap),
+			}),
 		);
 		wall2.position.set(6, 2, 0);
 		wall2.rotation.set(-Math.PI / 2, 0, -Math.PI / 2);
@@ -38,7 +51,10 @@ export default () => {
 
 		wall3 = new Mesh(
 			new PlaneGeometry(12, 4),
-			new Material({texture: new Texture("plasterwall030c.jpg")}),
+			new Material({
+				texture: new Texture("plasterwall034f.jpg"),
+				// normalMap: new Texture(normalMap),
+			}),
 		);
 		wall3.position.set(-6, 2, 0);
 		wall3.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
@@ -46,7 +62,10 @@ export default () => {
 
 		wall4 = new Mesh(
 			new PlaneGeometry(12, 4),
-			new Material({texture: new Texture("plasterwall030c.jpg")}),
+			new Material({
+				texture: new Texture("plasterwall034f.jpg"),
+				// normalMap: new Texture(normalMap),
+			}),
 		);
 		wall4.position.set(0, 2, -6);
 		wall4.rotation.set(-Math.PI / 2, 0, Math.PI);
@@ -57,7 +76,10 @@ export default () => {
 	{
 		ceiling = new Mesh(
 			new PlaneGeometry(12, 12),
-			new Material({texture: new Texture("woodfloor007a.jpg")}),
+			new Material({
+				texture: new Texture("woodfloor007a.jpg"),
+				// normalMap: new Texture(normal),
+			}),
 		);
 		ceiling.position.y = 4;
 		ceiling.rotation.set(Math.PI, -Math.PI / 2, 0); // Rotate the texture
@@ -68,8 +90,9 @@ export default () => {
 	{
 		cube = new Mesh(
 			new BoxGeometry(1.7),
-			// new Material({color: new Color(0xff9800)}),
-			new Material({texture: new Texture("noodles.jpg")}),
+			new Material({
+				texture: new Texture("noodles.jpg"),
+			}),
 		);
 		cube.position.set(2.7, .85, 3.3);
 		cube.rotation.y = -Math.PI / 7;

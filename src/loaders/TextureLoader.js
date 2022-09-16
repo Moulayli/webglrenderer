@@ -1,4 +1,4 @@
-import {TEXTURES, TEXTURE_PATH} from "../index.js";
+import {TEXTURES, TEXTURE_PATH, Loader} from "../index.js";
 
 /**
  * Utility class for loading textures asynchronously.
@@ -7,7 +7,11 @@ import {TEXTURES, TEXTURE_PATH} from "../index.js";
  * @param	{boolean}	[logs=false]	Whether to display advancement logs in the console
  * @returns	{TextureLoader}
  */
-export function TextureLoader() {
+export class TextureLoader extends Loader {
+	constructor() {
+		super();
+	}
+
 	/**
 	 * Loads the given sources into actual images.
 	 * 
@@ -15,7 +19,7 @@ export function TextureLoader() {
 	 * @param	{WebGL2RenderingContext}	gl		WebGL context
 	 * @param	{array}						sources	Sources to load
 	 */
-	this.load = async (gl, sources) => {
+	async load(gl, sources) {
 		const now = performance.now();
 		let image, texture;
 
@@ -53,7 +57,7 @@ export function TextureLoader() {
 		}
 
 		console.log(`%cLoading finished (took ${((performance.now() - now) / 1000).toFixed(2)}s)`, "color: #6cbf6c");
-	};
+	}
 };
 
 /**
@@ -63,7 +67,7 @@ export function TextureLoader() {
  * @param	{string}	source	Image path
  * @returns	{Image}
  */
-const load = async (source) => {
+const load = async source => {
 	const image = new Image();
 	image.src = TEXTURE_PATH + source;
 

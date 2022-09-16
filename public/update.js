@@ -1,6 +1,6 @@
 import {Keybind, VELOCITY} from "./config.js";
 import {renderer, scene, camera, keys} from "./main.js";
-import {cube} from "./init.js";
+import {light, cube} from "./init.js";
 
 export default () => {
 	// Cancel diagonal movement addition

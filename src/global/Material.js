@@ -1,11 +1,13 @@
-export const Material = function({texture, color}) {
-	this.type = texture ?
-		"texture" : color ?
+export function Material({color, texture}) {
+	Object.assign(this, {
+		type: color ?
 			"color" :
-			"material";
-
-	this.texture = texture;
-	this.color = color;
+			texture ?
+				"texture" :
+				"material",
+		color,
+		texture,
+	});
 
 	return this;
 };
