@@ -14,6 +14,7 @@ export default () => {
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
 	cube.rotation.y -= 0.01;
+	light.position.x = Math.cos(performance.now() / 1000) * 4;
 
 	renderer.render(scene, camera);
 };
