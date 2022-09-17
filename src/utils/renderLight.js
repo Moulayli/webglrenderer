@@ -1,4 +1,4 @@
-import {AmbientLight, DirectionalLight} from "../index.js";
+/*import {AmbientLight, DirectionalLight} from "../index.js";
 
 export function renderLight(gl, light) {
 	switch (true) {
@@ -12,4 +12,4 @@ export function renderLight(gl, light) {
 
 			break;
 	}
-};
+};*/

@@ -82,21 +82,21 @@ export class Renderer {
 		const {gl} = this;
 
 		// Configure the vertex buffer
-		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.vertex);
 		gl.enableVertexAttribArray(gl.attribute.position);
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.vertex);
 		gl.vertexAttribPointer(gl.attribute.position, 3, gl.FLOAT, false, 0, 0);
 
 		// Configure the normal buffer
-		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.normal);
 		gl.enableVertexAttribArray(gl.attribute.normal);
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.normal);
 		gl.vertexAttribPointer(gl.attribute.normal, 3, gl.FLOAT, false, 0, 0);
 
 		// Configure the index buffer
 		gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, gl.buffer.index);
 
 		// Configure the UV buffer
-		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 		gl.enableVertexAttribArray(gl.attribute.uv);
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 		gl.vertexAttribPointer(gl.attribute.uv, 2, gl.FLOAT, true, 0, 0);
 	}
 
@@ -145,22 +145,31 @@ export class Renderer {
 		}
 
 		// Render average light value
-		let ambientColor = [0, 0, 0, 0],
+		let lightColor = [0, 0, 0],
 			visibleLights = 0;
 
 		for (const light of scene.lights) {
 			if (light.visible && light.intensity) {
 				visibleLights++;
-				ambientColor[0] += light.value[3] * light.value[0];
-				ambientColor[1] += light.value[3] * light.value[1];
-				ambientColor[2] += light.value[3] * light.value[2];
-				ambientColor[3] += light.value[3];
+				lightColor[0] += light.value[3] * light.value[0];
+				lightColor[1] += light.value[3] * light.value[1];
+				lightColor[2] += light.value[3] * light.value[2];
+				// lightColor[3] += light.value[3];
 
-				light.position && gl.uniform3fv(gl.uniform.lightWorldPos, light.position.xyz());
+				light.position && gl.uniform3fv(
+					gl.uniform.lightPos,
+					light.position
+						.multiply(camera.lhcs)
+						.invert()
+						.xyz(),
+				);
 			}
 		}
 
-		ambientColor = ambientColor.map(i => i / visibleLights);
-		gl.uniform4fv(gl.uniform.ambientColor, ambientColor);
+		lightColor = lightColor.map(i => i / visibleLights);
+		gl.uniform3fv(gl.uniform.lightColor, lightColor);
+
+		gl.uniform4fv(gl.uniform.fogColor, scene.fogColor.hex1);
+		gl.uniform1f(gl.uniform.fogAmount, scene.fogAmount);
 	}
 };

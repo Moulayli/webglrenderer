@@ -1,4 +1,4 @@
-export function Material({color, texture}) {
+export function Material({color, texture, normalMap}) {
 	Object.assign(this, {
 		type: color ?
 			"color" :
@@ -7,6 +7,7 @@ export function Material({color, texture}) {
 				"material",
 		color,
 		texture,
+		normalMap,
 	});
 
 	return this;

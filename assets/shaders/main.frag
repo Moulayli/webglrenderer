@@ -2,26 +2,34 @@
 
 precision highp float;
 
-in vec3 v_normal;
 in vec2 v_uv;
-in vec3 v_surfaceToLight;
+in vec3 v_surfaceToLightPos;
+in vec3 v_normal;
 
 uniform vec4 u_color;
-uniform vec4 u_ambientColor;
-uniform sampler2D u_normalMap;
+uniform vec3 u_lightColor;
 uniform sampler2D u_texture;
+uniform sampler2D u_normalMap;
+uniform vec4 u_fogColor;
+uniform float u_fogAmount;
 
-out vec4 fragColor;
+out vec4 FragColor;
 
 void main() {
-	vec3 normal = normalize(v_normal);
-	vec3 surfaceToLightDir = normalize(v_surfaceToLight);
+	FragColor = u_color * texture(u_texture, v_uv);
 
-	// vec3 normalMap = normalize(texture(u_normalMap, v_uv).xyz * 2.0 - 1.0);
-	float light = dot(normal, surfaceToLightDir);
+	// Normalize the normal because it is interpolated and not 1.0 in length any more
+	vec3 normal = texture(u_normalMap, v_uv).rgb;
+	normal = normalize(normal * 2.0 - 1.0);
 
-	vec4 texture = texture(u_texture, v_uv) * u_color * u_ambientColor;
+	// Calculate the light direction and make its length 1.
+	vec3 surfaceToLightDir = normalize(v_surfaceToLightPos);
 
-	fragColor = texture;
-	fragColor.rgb *= light;
+	// Calculate the dot product of the light direction and the normal (orientation of a surface)
+	float light = max(dot(normal, surfaceToLightDir), 0.0);
+
+	// Calculate the final color from diffuse reflection
+	vec3 diffuse = FragColor.rgb * u_lightColor * light;
+
+	FragColor = mix(vec4(diffuse, FragColor.a), u_fogColor, u_fogAmount);
 }

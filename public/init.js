@@ -1,19 +1,20 @@
-import {BoxGeometry, Material, Mesh, PlaneGeometry, PointLight, Texture} from "../src/index.js";
+import {BoxGeometry, Color, Material, Mesh, PlaneGeometry, PointLight, Texture} from "../src/index.js";
 import {scene} from "./main.js";
 
 export default () => {
 	// Light
 	{
-		light = new PointLight(0xfefebe, 1.1);
-		light.position.set(-4.4, 3.3, -4.4);
+		light = new PointLight(0xfefebe, 1.3);
+		light.position.set(-4.4, 3.3, 4.4);
 	}
 
 	// Floor
 	{
 		floor = new Mesh(
-			new PlaneGeometry(12, 12),
+			new PlaneGeometry(120, 120),
 			new Material({
 				texture: new Texture("tilefloor018a.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		floor.rotation.y = -Math.PI / 2; // Rotate the texture
@@ -25,7 +26,8 @@ export default () => {
 		wall1 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall034f.jpg"),
+				texture: new Texture("brickwall.jpg"),
+				normalMap: new Texture("brickwall_normal.jpg"),
 			}),
 		);
 		wall1.position.set(0, 2, 6);
@@ -35,7 +37,8 @@ export default () => {
 		wall2 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall034f.jpg"),
+				texture: new Texture("brickwall.jpg"),
+				normalMap: new Texture("brickwall_normal.jpg"),
 			}),
 		);
 		wall2.position.set(6, 2, 0);
@@ -45,7 +48,8 @@ export default () => {
 		wall3 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall034f.jpg"),
+				texture: new Texture("brickwall.jpg"),
+				normalMap: new Texture("brickwall_normal.jpg"),
 			}),
 		);
 		wall3.position.set(-6, 2, 0);
@@ -55,7 +59,8 @@ export default () => {
 		wall4 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall034f.jpg"),
+				texture: new Texture("brickwall.jpg"),
+				normalMap: new Texture("brickwall_normal.jpg"),
 			}),
 		);
 		wall4.position.set(0, 2, -6);
@@ -69,6 +74,7 @@ export default () => {
 			new PlaneGeometry(12, 12),
 			new Material({
 				texture: new Texture("woodfloor007a.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		ceiling.position.y = 4;
@@ -82,6 +88,7 @@ export default () => {
 			new BoxGeometry(1.7),
 			new Material({
 				texture: new Texture("noodles.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		cube.position.set(2.7, .85, 3.3);

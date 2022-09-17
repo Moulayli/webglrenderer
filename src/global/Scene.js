@@ -1,8 +1,10 @@
-import {Camera, Color} from "../index.js";
+import {Camera, Color, Light} from "../index.js";
 
-export function Scene({background = new Color(0x000000)} = {}) {
+export function Scene({background = new Color(0x000000), fogColor = new Color(0xaaaaaa), fogAmount = 0} = {}) {
 	Object.assign(this, {
 		background,
+		fogColor,
+		fogAmount,
 		objects: new Set(),
 		cameras: new Set(),
 		lights: new Set(),
@@ -14,19 +16,22 @@ export function Scene({background = new Color(0x000000)} = {}) {
 
 Scene.prototype.add = function(...objects) {
 	for (const object of objects) {
-		this.objects.add(object);
-
-		switch (object.type) {
-			case "light":	this.lights.add(object);	break;
-			case "mesh":	this.meshes.add(object);	break;
-		}
-
 		switch (true) {
 			case object instanceof Camera:
 				this.cameras.add(object);
 
 				break;
+			case object instanceof Light:
+				this.lights.add(object);
+
+				break;
+			case object.type === "mesh":
+				this.meshes.add(object);
+
+				break;
 		}
+
+		this.objects.add(object);
 	}
 
 	return this;
@@ -34,19 +39,22 @@ Scene.prototype.add = function(...objects) {
 
 Scene.prototype.remove = function(...objects) {
 	for (const object of objects) {
-		this.objects.delete(object);
-
-		switch (object.type) {
-			case "light":	this.lights.delete(object);		break;
-			case "mesh":	this.meshes.delete(object);		break;
-		}
-
 		switch (true) {
 			case object instanceof Camera:
 				this.cameras.delete(object);
 
 				break;
+			case object instanceof Light:
+				this.lights.delete(object);
+
+				break;
+			case object.type === "mesh":
+				this.meshes.delete(object);
+
+				break;
 		}
+
+		this.objects.delete(object);
 	}
 
 	return this;

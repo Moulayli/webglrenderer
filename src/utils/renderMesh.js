@@ -1,5 +1,4 @@
-import {Matrix4} from "../math/Matrix4.js";
-import {Vector3} from "../math/Vector3.js";
+import {TEXTURES, Matrix4, Vector3} from "../index.js";
 
 let worldMatrix,
 	worldViewProjectionMatrix;
@@ -44,22 +43,22 @@ export function renderMesh(gl, mesh, camera, primitiveType, viewProjectionMatrix
 		case "texture": {
 			gl.uniform4fv(gl.uniform.color, gl.defaults.color);
 
+			gl.uniform1i(gl.uniform.texture, 0);
+			gl.uniform1i(gl.uniform.normalMap, 1);
+
 			// Pass the texture
 			{
+				gl.activeTexture(gl.TEXTURE0);
 				gl.bindTexture(gl.TEXTURE_2D, mesh.material.texture.texture);
-
-				// Pixelated
-				// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-
 				gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.uv);
 				gl.bufferData(gl.ARRAY_BUFFER, mesh.geometry.uvs, gl.STATIC_DRAW);
 			}
 
 			// Pass the normal map
-			/*if (mesh.material.normalMap) {
-				gl.bindTexture(gl.TEXTURE_2D, mesh.material.normalMap);
-				gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.normalMap);
-			}*/
+			if (mesh.material.normalMap) {
+				gl.activeTexture(gl.TEXTURE1);
+				gl.bindTexture(gl.TEXTURE_2D, mesh.material.normalMap.texture);
+			}
 
 			break;
 		}
@@ -67,3 +66,6 @@ export function renderMesh(gl, mesh, camera, primitiveType, viewProjectionMatrix
 
 	gl.drawElements(primitiveType, geometry.indices.length, gl.UNSIGNED_SHORT, 0);
 };
+
+// Pixelated filter
+// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
