@@ -56,10 +56,10 @@ export function renderMesh(gl, mesh, camera, primitiveType, viewProjectionMatrix
 			}
 
 			// Pass the normal map
-			if (mesh.material.normalMap) {
+			/*if (mesh.material.normalMap) {
 				gl.bindTexture(gl.TEXTURE_2D, mesh.material.normalMap);
 				gl.bindBuffer(gl.ARRAY_BUFFER, gl.buffer.normalMap);
-			}
+			}*/
 
 			break;
 		}

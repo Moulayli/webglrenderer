@@ -14,7 +14,6 @@ export default () => {
 			new PlaneGeometry(12, 12),
 			new Material({
 				texture: new Texture("tilefloor018a.jpg"),
-				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		floor.rotation.y = -Math.PI / 2; // Rotate the texture
@@ -23,11 +22,10 @@ export default () => {
 
 	// Walls
 	{
-		/*wall1 = new Mesh(
+		wall1 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
 				texture: new Texture("plasterwall034f.jpg"),
-				normalMap: new Texture("plasterwall034f_normal.jpg"),
 			}),
 		);
 		wall1.position.set(0, 2, 6);
@@ -38,7 +36,6 @@ export default () => {
 			new PlaneGeometry(12, 4),
 			new Material({
 				texture: new Texture("plasterwall034f.jpg"),
-				normalMap: new Texture("plasterwall034f_normal.jpg"),
 			}),
 		);
 		wall2.position.set(6, 2, 0);
@@ -49,7 +46,6 @@ export default () => {
 			new PlaneGeometry(12, 4),
 			new Material({
 				texture: new Texture("plasterwall034f.jpg"),
-				normalMap: new Texture("plasterwall034f_normal.jpg"),
 			}),
 		);
 		wall3.position.set(-6, 2, 0);
@@ -60,23 +56,11 @@ export default () => {
 			new PlaneGeometry(12, 4),
 			new Material({
 				texture: new Texture("plasterwall034f.jpg"),
-				normalMap: new Texture("plasterwall034f_normal.jpg"),
 			}),
 		);
 		wall4.position.set(0, 2, -6);
 		wall4.rotation.set(-Math.PI / 2, 0, Math.PI);
-		wall4.geometry.uvs = setPlaneUVs(wall4.geometry.width, wall4.geometry.height, .25);*/
-
-		wall1 = new Mesh(
-			new PlaneGeometry(4),
-			new Material({
-				texture: new Texture("plasterwall034f.jpg"),
-				normalMap: new Texture("plasterwall034f_normal.jpg"),
-			}),
-		);
-		wall1.position.set(0, 2, 4);
-		wall1.rotation.x = -Math.PI / 2;
-		wall1.geometry.uvs = setPlaneUVs(wall1.geometry.width, wall1.geometry.height, .25);
+		wall4.geometry.uvs = setPlaneUVs(wall4.geometry.width, wall4.geometry.height, .25);
 	}
 
 	// Ceiling
@@ -85,7 +69,6 @@ export default () => {
 			new PlaneGeometry(12, 12),
 			new Material({
 				texture: new Texture("woodfloor007a.jpg"),
-				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		ceiling.position.y = 4;
@@ -137,7 +120,7 @@ export default () => {
 		]);
 	}
 
-	scene.add(light, wall1);
+	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling, cube);
 };
 export let light, floor, wall1, wall2, wall3, wall4, ceiling, cube;
 

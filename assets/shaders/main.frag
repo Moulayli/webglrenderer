@@ -17,10 +17,11 @@ void main() {
 	vec3 normal = normalize(v_normal);
 	vec3 surfaceToLightDir = normalize(v_surfaceToLight);
 
-	vec3 normalMap = normalize(texture(u_normalMap, v_uv).xyz * 2.0 - 1.0);
-	float light = dot(normalMap, surfaceToLightDir);
+	// vec3 normalMap = normalize(texture(u_normalMap, v_uv).xyz * 2.0 - 1.0);
+	float light = dot(normal, surfaceToLightDir);
 
-	vec4 texture = texture(u_texture, v_uv) * u_color;// * u_ambientColor;
+	vec4 texture = texture(u_texture, v_uv) * u_color * u_ambientColor;
 
-	fragColor = texture * light;
+	fragColor = texture;
+	fragColor.rgb *= light;
 }
