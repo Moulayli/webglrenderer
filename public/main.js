@@ -2,6 +2,7 @@ import {Renderer, Scene, PerspectiveCamera, TextureLoader} from "../src/index.js
 import "./events.js";
 import init from "./init.js";
 import loop from "./loop.js";
+import {PLAYER_HEIGHT} from "./config.js";
 
 /**
  * Controls
@@ -24,7 +25,7 @@ export const
 		DEPTH_TEST: true,
 	}),
 	scene		= new Scene(),
-	camera		= new PerspectiveCamera(90, 1, .1, 100),
+	camera		= new PerspectiveCamera(90, 1, .1, 1000),
 	loader		= new TextureLoader(),
 	sources		= await (await fetch("public/textures.json")).json();
 
@@ -36,7 +37,7 @@ document.body.children[0].appendChild(renderer.canvas);
 
 camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
-camera.position.set(0, 2.003, 0);
+camera.position.set(0, PLAYER_HEIGHT, 0);
 
 init();
 

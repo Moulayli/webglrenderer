@@ -26,8 +26,8 @@ export default () => {
 		wall1 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall030c.jpg"),
-				normalMap: new Texture("normal.jpg"),
+				texture: new Texture("plasticceiling001a.jpg"),
+				normalMap: new Texture("plasticceiling001a_normal.jpg"),
 			}),
 		);
 		wall1.position.set(0, 2, 6);
@@ -37,8 +37,8 @@ export default () => {
 		wall2 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall030c.jpg"),
-				normalMap: new Texture("normal.jpg"),
+				texture: new Texture("plasticceiling001a.jpg"),
+				normalMap: new Texture("plasticceiling001a_normal.jpg"),
 			}),
 		);
 		wall2.position.set(6, 2, 0);
@@ -48,8 +48,8 @@ export default () => {
 		wall3 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall030c.jpg"),
-				normalMap: new Texture("normal.jpg"),
+				texture: new Texture("plasticceiling001a.jpg"),
+				normalMap: new Texture("plasticceiling001a_normal.jpg"),
 			}),
 		);
 		wall3.position.set(-6, 2, 0);
@@ -59,8 +59,8 @@ export default () => {
 		wall4 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("plasterwall030c.jpg"),
-				normalMap: new Texture("normal.jpg"),
+				texture: new Texture("plasticceiling001a.jpg"),
+				normalMap: new Texture("plasticceiling001a_normal.jpg"),
 			}),
 		);
 		wall4.position.set(0, 2, -6);
@@ -83,7 +83,7 @@ export default () => {
 	}
 
 	// Cube
-	{
+	/*{
 		cube = new Mesh(
 			new BoxGeometry(1.7),
 			new Material({
@@ -125,9 +125,9 @@ export default () => {
 			0.5,  1,
 			0.75, 1,
 		]);
-	}
+	}*/
 
-	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling, cube);
+	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling);
 };
 export let light, floor, wall1, wall2, wall3, wall4, ceiling, cube;
 

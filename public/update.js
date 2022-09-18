@@ -1,6 +1,6 @@
 import {Keybind, VELOCITY} from "./config.js";
 import {renderer, scene, camera, keys} from "./main.js";
-import {light, cube} from "./init.js";
+import {light} from "./init.js";
 
 export default () => {
 	// Cancel diagonal movement addition
@@ -13,7 +13,6 @@ export default () => {
 	keys.has(Keybind.up)		&& camera.moveUp(v);
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
-	cube.rotation.y -= 0.01;
 	light.position.x = Math.cos(performance.now() / 500) * 4;
 
 	renderer.render(scene, camera);
