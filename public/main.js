@@ -36,7 +36,7 @@ document.body.children[0].appendChild(renderer.canvas);
 
 camera.aspect = renderer.width / renderer.height;
 camera.updateProjectionMatrix();
-camera.position.set(0, 2.003, -4);
+camera.position.set(0, 2.003, 0);
 
 init();
 

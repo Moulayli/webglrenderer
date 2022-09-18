@@ -11,7 +11,7 @@ export default () => {
 	// Floor
 	{
 		floor = new Mesh(
-			new PlaneGeometry(120, 120),
+			new PlaneGeometry(12),
 			new Material({
 				texture: new Texture("tilefloor018a.jpg"),
 				normalMap: new Texture("normal.jpg"),
@@ -26,8 +26,8 @@ export default () => {
 		wall1 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("brickwall.jpg"),
-				normalMap: new Texture("brickwall_normal.jpg"),
+				texture: new Texture("plasterwall030c.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		wall1.position.set(0, 2, 6);
@@ -37,8 +37,8 @@ export default () => {
 		wall2 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("brickwall.jpg"),
-				normalMap: new Texture("brickwall_normal.jpg"),
+				texture: new Texture("plasterwall030c.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		wall2.position.set(6, 2, 0);
@@ -48,8 +48,8 @@ export default () => {
 		wall3 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("brickwall.jpg"),
-				normalMap: new Texture("brickwall_normal.jpg"),
+				texture: new Texture("plasterwall030c.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		wall3.position.set(-6, 2, 0);
@@ -59,8 +59,8 @@ export default () => {
 		wall4 = new Mesh(
 			new PlaneGeometry(12, 4),
 			new Material({
-				texture: new Texture("brickwall.jpg"),
-				normalMap: new Texture("brickwall_normal.jpg"),
+				texture: new Texture("plasterwall030c.jpg"),
+				normalMap: new Texture("normal.jpg"),
 			}),
 		);
 		wall4.position.set(0, 2, -6);
@@ -71,7 +71,7 @@ export default () => {
 	// Ceiling
 	{
 		ceiling = new Mesh(
-			new PlaneGeometry(12, 12),
+			new PlaneGeometry(12),
 			new Material({
 				texture: new Texture("woodfloor007a.jpg"),
 				normalMap: new Texture("normal.jpg"),
