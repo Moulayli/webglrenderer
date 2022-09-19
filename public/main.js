@@ -2,7 +2,6 @@ import {Renderer, Scene, PerspectiveCamera, TextureLoader} from "../src/index.js
 import "./events.js";
 import init from "./init.js";
 import loop from "./loop.js";
-import {PLAYER_HEIGHT} from "./config.js";
 
 /**
  * Controls
@@ -34,10 +33,6 @@ await loader.load(renderer.gl, sources);
 
 renderer.stretch();
 document.body.children[0].appendChild(renderer.canvas);
-
-camera.aspect = renderer.width / renderer.height;
-camera.updateProjectionMatrix();
-camera.position.set(0, PLAYER_HEIGHT, 0);
 
 init();
 

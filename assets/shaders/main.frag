@@ -26,7 +26,7 @@ void main() {
 	vec3 surfaceToLightDir = normalize(v_surfaceToLightPos);
 
 	// Calculate the dot product of the light direction and the normal (orientation of a surface)
-	float light = max(dot(normal, surfaceToLightDir), 0.0);
+	float light = max(dot(v_normal, surfaceToLightDir), 0.0);
 
 	// Calculate the final color from diffuse reflection
 	vec3 diffuse = FragColor.rgb * u_lightColor * light;

@@ -1,141 +1,127 @@
-import {BoxGeometry, Color, Material, Mesh, PlaneGeometry, PointLight, Texture} from "../src/index.js";
-import {scene} from "./main.js";
+import {BoxGeometry, Color, Material, Mesh, PlaneGeometry, PointLight, Texture, Vector2} from "../src/index.js";
+import {renderer, scene, camera} from "./main.js";
+import {PLAYER_HEIGHT} from "./config.js";
 
 export default () => {
+	camera.aspect = renderer.width / renderer.height;
+	camera.updateProjectionMatrix();
+	camera.position.set(0, PLAYER_HEIGHT, 0);
+
+	scene.background = new Color(0x151515);
+
+	const texture = {
+		normal: new Texture("normal.jpg"),
+		plasterwall030a: new Texture("plasterwall030a.jpg"),
+		plasterwall030c: new Texture("plasterwall030c.jpg"),
+		tilefloor018a: new Texture("tilefloor018a.jpg"),
+	};
+	const geometry = {
+		floor: new PlaneGeometry(303, 332),
+		wall: {
+			odd: new PlaneGeometry(303, 128),
+			even: new PlaneGeometry(213.4, 128),
+		},
+		ceiling: new PlaneGeometry(303, 213.4),
+	};
+	const material = {
+		floor: new Material({
+			texture: texture.tilefloor018a,
+			normalMap: texture.normal,
+		}),
+		lowerwall: new Material({
+			texture: texture.plasterwall030c,
+			normalMap: texture.normal,
+		}),
+		upperwall: new Material({
+			texture: texture.plasterwall030a,
+			normalMap: texture.normal,
+		}),
+		ceiling: new Material({
+			texture: texture.plasterwall030a,
+			normalMap: texture.normal,
+		}),
+	};
+
 	// Light
 	{
 		light = new PointLight(0xfefebe, 1.3);
-		light.position.set(-4.4, 3.3, 4.4);
+		light.position.set(0, 192, 0);
 	}
 
 	// Floor
 	{
-		floor = new Mesh(
-			new PlaneGeometry(12),
-			new Material({
-				texture: new Texture("tilefloor018a.jpg"),
-				normalMap: new Texture("normal.jpg"),
-			}),
-		);
-		floor.rotation.y = -Math.PI / 2; // Rotate the texture
-		floor.geometry.uvs = setPlaneUVs(floor.geometry.width, floor.geometry.height, .3375);
+		floor = new Mesh(geometry.floor, material.floor);
+		floor.position.z = -59.3;
+		floor.geometry.uvs = new Float32Array([
+			.55375 + 0,                0,
+			.55375 + .3375 * 303 / 32, 0,
+			.55375 + 0,                .3375 * 332 / 32,
+			.55375 + .3375 * 303 / 32, .3375 * 332 / 32,
+		]);
 	}
 
 	// Walls
 	{
-		wall1 = new Mesh(
-			new PlaneGeometry(12, 4),
-			new Material({
-				texture: new Texture("plasticceiling001a.jpg"),
-				normalMap: new Texture("plasticceiling001a_normal.jpg"),
-			}),
-		);
-		wall1.position.set(0, 2, 6);
-		wall1.rotation.x = -Math.PI / 2;
-		wall1.geometry.uvs = setPlaneUVs(wall1.geometry.width, wall1.geometry.height, .25);
+		// Lower walls
+		{
+			// Front wall
+			lowerwall1 = new Mesh(geometry.wall.odd, material.lowerwall);
+			lowerwall1.geometry.uvs = setPlaneUVs(lowerwall1.geometry.width, lowerwall1.geometry.height, .25);
+			lowerwall1.position.set(0, 64, 106.7);
+			lowerwall1.rotation.set(-Math.PI / 2, 0, 0);
 
-		wall2 = new Mesh(
-			new PlaneGeometry(12, 4),
-			new Material({
-				texture: new Texture("plasticceiling001a.jpg"),
-				normalMap: new Texture("plasticceiling001a_normal.jpg"),
-			}),
-		);
-		wall2.position.set(6, 2, 0);
-		wall2.rotation.set(-Math.PI / 2, 0, -Math.PI / 2);
-		wall2.geometry.uvs = setPlaneUVs(wall2.geometry.width, wall2.geometry.height, .25);
+			// Right wall (building entrance)
+			lowerwall2 = new Mesh(new PlaneGeometry(213.4, 128), material.lowerwall);
+			lowerwall2.geometry.uvs = setPlaneUVs(lowerwall2.geometry.width, lowerwall2.geometry.height, .25);
+			lowerwall2.position.set(151.5, 64, 0);
+			lowerwall2.rotation.set(Math.PI / 2, Math.PI, Math.PI / 2);
 
-		wall3 = new Mesh(
-			new PlaneGeometry(12, 4),
-			new Material({
-				texture: new Texture("plasticceiling001a.jpg"),
-				normalMap: new Texture("plasticceiling001a_normal.jpg"),
-			}),
-		);
-		wall3.position.set(-6, 2, 0);
-		wall3.rotation.set(-Math.PI / 2, 0, Math.PI / 2);
-		wall3.geometry.uvs = setPlaneUVs(wall3.geometry.width, wall3.geometry.height, .25);
+			// Back wall
+			lowerwall3 = new Mesh(geometry.wall.odd, material.lowerwall);
+			lowerwall3.geometry.uvs = setPlaneUVs(lowerwall3.geometry.width, lowerwall3.geometry.height, .25);
+			lowerwall3.position.set(0, 64, -106.7);
+			lowerwall3.rotation.set(Math.PI / 2, Math.PI, 0);
+		}
 
-		wall4 = new Mesh(
-			new PlaneGeometry(12, 4),
-			new Material({
-				texture: new Texture("plasticceiling001a.jpg"),
-				normalMap: new Texture("plasticceiling001a_normal.jpg"),
-			}),
-		);
-		wall4.position.set(0, 2, -6);
-		wall4.rotation.set(-Math.PI / 2, 0, Math.PI);
-		wall4.geometry.uvs = setPlaneUVs(wall4.geometry.width, wall4.geometry.height, .25);
+		// Upper walls
+		{
+			// Front wall
+			upperwall1 = new Mesh(geometry.wall.odd, material.upperwall);
+			upperwall1.geometry.uvs = setPlaneUVs(upperwall1.geometry.width, upperwall1.geometry.height, .25);
+			upperwall1.position.set(0, 192, 106.7);
+			upperwall1.rotation.set(-Math.PI / 2, 0, 0);
+
+			// Back wall
+			upperwall2 = new Mesh(geometry.wall.even, material.upperwall);
+			upperwall2.geometry.uvs = setPlaneUVs(upperwall2.geometry.width, upperwall2.geometry.height, .25);
+			upperwall2.position.set(151.5, 192, 0);
+			upperwall2.rotation.set(Math.PI / 2, Math.PI, Math.PI / 2);
+
+			// Back wall
+			upperwall3 = new Mesh(geometry.wall.odd, material.upperwall);
+			upperwall3.geometry.uvs = setPlaneUVs(upperwall3.geometry.width, upperwall3.geometry.height, .25);
+			upperwall3.position.set(0, 192, -106.7);
+			upperwall3.rotation.set(Math.PI / 2, Math.PI, 0);
+		}
 	}
 
 	// Ceiling
 	{
-		ceiling = new Mesh(
-			new PlaneGeometry(12),
-			new Material({
-				texture: new Texture("woodfloor007a.jpg"),
-				normalMap: new Texture("normal.jpg"),
-			}),
-		);
-		ceiling.position.y = 4;
-		ceiling.rotation.set(Math.PI, -Math.PI / 2, 0); // Rotate the texture
+		ceiling = new Mesh(geometry.ceiling, material.ceiling);
 		ceiling.geometry.uvs = setPlaneUVs(ceiling.geometry.width, ceiling.geometry.height, .3375);
+		ceiling.position.y = 256;
+		ceiling.rotation.x = Math.PI;
 	}
 
-	// Cube
-	/*{
-		cube = new Mesh(
-			new BoxGeometry(1.7),
-			new Material({
-				texture: new Texture("noodles.jpg"),
-				normalMap: new Texture("normal.jpg"),
-			}),
-		);
-		cube.position.set(2.7, .85, 3.3);
-		cube.rotation.y = -Math.PI / 7;
-		cube.geometry.uvs = new Float32Array([
-			// Front
-			0,    0,
-			0.25, 0,
-			0,    0.5,
-			0.25, 0.5,
-			// Back
-			0.5,  0,
-			0.25, 0,
-			0.5,  0.5,
-			0.25, 0.5,
-			// Left
-			0,    0.5,
-			0.25, 0.5,
-			0,    1,
-			0.25, 1,
-			// Right
-			0.5,  0,
-			0.75, 0,
-			0.5,  0.5,
-			0.75, 0.5,
-			// Top
-			0.5,  0.5,
-			0.25, 0.5,
-			0.5,  1,
-			0.25, 1,
-			// Bottom
-			0.5,  0.5,
-			0.75, 0.5,
-			0.5,  1,
-			0.75, 1,
-		]);
-	}*/
-
-	scene.add(light, floor, wall1, wall2, wall3, wall4, ceiling);
+	scene.add(floor, lowerwall1, lowerwall2, lowerwall3, upperwall1, upperwall2, upperwall3, ceiling, light);
 };
-export let light, floor, wall1, wall2, wall3, wall4, ceiling, cube;
+export let floor, lowerwall1, lowerwall2, lowerwall3, upperwall1, upperwall2, upperwall3, ceiling, light;
 
 function setPlaneUVs(w, h, n) {
 	return new Float32Array([
-		0,     0,
-		n * w, 0,
-		0,     n * h,
-		n * w, n * h,
+		0,          0,
+		n * w / 32, 0,
+		0,          n * h / 32,
+		n * w / 32, n * h / 32,
 	]);
 }

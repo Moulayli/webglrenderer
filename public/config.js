@@ -1,7 +1,7 @@
 export const
 	FRAMES_PER_SECOND = 60,
-	PLAYER_HEIGHT = 2.003,
-	VELOCITY = 5 / FRAMES_PER_SECOND,
+	PLAYER_HEIGHT = 64,
+	VELOCITY = 3,
 	Keybind = {
 		forward:	"KeyW",
 		backward:	"KeyS",

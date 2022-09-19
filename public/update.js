@@ -13,7 +13,7 @@ export default () => {
 	keys.has(Keybind.up)		&& camera.moveUp(v);
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
-	light.position.x = Math.cos(performance.now() / 500) * 4;
+	// light.position.x = Math.cos(performance.now() / 500) * 128;
 
 	renderer.render(scene, camera);
 };
