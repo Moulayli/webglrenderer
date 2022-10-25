@@ -1,5 +1,5 @@
 import {Keybind, VELOCITY} from "./config.js";
-import {renderer, scene, camera, keys} from "./main.js";
+import {renderer, panoramaScene, camera, keys} from "./main.js";
 import {light} from "./init.js";
 
 export default () => {
@@ -13,9 +13,15 @@ export default () => {
 	keys.has(Keybind.up)		&& camera.moveUp(v);
 	keys.has(Keybind.down)		&& camera.moveUp(-v);
 
-	// light.position.x = Math.cos(performance.now() / 500) * 128;
+	now = performance.now();
 
-	renderer.render(scene, camera);
+	camera.rotation.set(
+		-Math.PI / 16,
+		Math.PI * (now / 40000),
+		0,
+	);
+
+	renderer.render(panoramaScene, camera);
 };
 
-let v;
+let v, now;

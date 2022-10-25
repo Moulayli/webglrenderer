@@ -24,7 +24,8 @@ export const
 		DEPTH_TEST: true,
 	}),
 	scene		= new Scene(),
-	camera		= new PerspectiveCamera(90, 1, .1, 1000),
+    panoramaScene = new Scene(),
+	camera		= new PerspectiveCamera(75, 1, .1, 1000),
 	loader		= new TextureLoader(),
 	sources		= await (await fetch("public/textures.json")).json();
 

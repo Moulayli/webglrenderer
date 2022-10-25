@@ -1,11 +1,11 @@
 import {BoxGeometry, Color, Material, Mesh, PlaneGeometry, PointLight, Texture, Vector2} from "../src/index.js";
-import {renderer, scene, camera} from "./main.js";
+import {renderer, scene, panoramaScene, camera} from "./main.js";
 import {PLAYER_HEIGHT} from "./config.js";
 
 export default () => {
 	camera.aspect = renderer.width / renderer.height;
 	camera.updateProjectionMatrix();
-	camera.position.set(0, PLAYER_HEIGHT, 0);
+	// camera.position.set(0, PLAYER_HEIGHT, 0);
 
 	scene.background = new Color(0x151515);
 
@@ -114,6 +114,61 @@ export default () => {
 	}
 
 	scene.add(floor, lowerwall1, lowerwall2, lowerwall3, upperwall1, upperwall2, upperwall3, ceiling, light);
+
+
+
+
+
+
+
+
+
+
+
+	// Panorama cubemap tests
+	{
+		const
+			textures = [
+				new Texture("panorama_0.png"),
+				new Texture("panorama_1.png"),
+				new Texture("panorama_2.png"),
+				new Texture("panorama_3.png"),
+				new Texture("panorama_4.png"),
+				new Texture("panorama_5.png"),
+			],
+			geometry = new PlaneGeometry(400, 400),
+			meshes = Array.from({length: 6}, (_, i) => new Mesh(
+				geometry,
+				new Material({texture: textures[i]}),
+			)),
+			light = new PointLight(0xffffff, 1.2);
+
+		// UVs
+		for (const mesh of meshes) mesh.geometry.uvs = new Float32Array([0, 0, 0, 1, 1, 0, 1, 1]);
+
+		// Position/angle
+		{
+			meshes[0].position.z = 200;
+			meshes[0].rotation.set(0, Math.PI / 2, Math.PI / 2);
+
+			meshes[1].position.x = -200;
+			meshes[1].rotation.set(0, 0, Math.PI / 2);
+
+			meshes[2].position.z = -200;
+			meshes[2].rotation.set(0, -Math.PI / 2, Math.PI / 2);
+
+			meshes[3].position.x = 200;
+			meshes[3].rotation.set(Math.PI, 0, -Math.PI / 2);
+
+			meshes[4].position.y = 200;
+			meshes[4].rotation.set(Math.PI, Math.PI / 2, 0);
+
+			meshes[5].position.y = -200;
+			meshes[5].rotation.set(0, Math.PI / 2, 0);
+		}
+
+		panoramaScene.add(...meshes, light);
+	}
 };
 export let floor, lowerwall1, lowerwall2, lowerwall3, upperwall1, upperwall2, upperwall3, ceiling, light;
 
