@@ -1,0 +1,18 @@
+div.test {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: .5rem;
+	top: 0;
+	position: absolute;
+	box-sizing: border-box;
+	background-color: #00000070;
+	color: #fff;
+	z-index: 1;
+}
+
+.fixed {
+	top: 0;
+	position: absolute;
+	z-index: -1;
+}

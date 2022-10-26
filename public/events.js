@@ -1,5 +1,7 @@
 import {renderer, camera, keys} from "./main.js";
 
+export let spinValue = 0;
+
 const
 	pressKeys = e => {
 		e.preventDefault();
@@ -41,3 +43,13 @@ addEventListener("click", e => {
 
 // window.addEventListener("pointerlockchange") doesn't fire in some browsers
 document.addEventListener("pointerlockchange", pointerLockChange);
+
+// Test: camera spin input
+{
+	spin.max = Math.PI * 2;
+	spin.addEventListener("input", function() {
+		debug.textContent = spinValue = this.value;
+	});
+
+	vid.playbackRate = 8;
+}

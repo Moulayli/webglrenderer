@@ -43,10 +43,7 @@ export class TextureLoader extends Loader {
 
 			image = await load(source);
 
-			// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-			// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-			// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
-			// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST); // Pixelated filter
+			setTexParameteri(gl, "norepeat");
 
 			gl.texImage2D(
 				gl.TEXTURE_2D,
@@ -85,4 +82,26 @@ const load = async source => {
 	console.log(`%c${source} loaded`, "color: #777; font-style: italic");
 
 	return image;
+};
+
+/**
+ * Applies a texture parameter to the current TEXTURE_2D.
+ * 
+ * @param	{WebGL2RenderingContext}	gl		WebGL context
+ * @param	{string}					param	Parameter name
+ */
+const setTexParameteri = (gl, param) => {
+	// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+
+	switch (param) {
+		case "norepeat":
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+
+			break;
+		case "pixelated":
+			gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+			break;
+	}
 };

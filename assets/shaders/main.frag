@@ -31,5 +31,5 @@ void main() {
 	// Calculate the final color from diffuse reflection
 	vec3 diffuse = FragColor.rgb * u_lightColor * light;
 
-	FragColor = mix(vec4(diffuse, FragColor.a), u_fogColor, u_fogAmount);
+	// FragColor = mix(vec4(diffuse, FragColor.a), u_fogColor, u_fogAmount);
 }

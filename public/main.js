@@ -25,7 +25,7 @@ export const
 	}),
 	scene		= new Scene(),
     panoramaScene = new Scene(),
-	camera		= new PerspectiveCamera(75, 1, .1, 1000),
+	camera		= new PerspectiveCamera(85, 1, .1, 1000),
 	loader		= new TextureLoader(),
 	sources		= await (await fetch("public/textures.json")).json();
 

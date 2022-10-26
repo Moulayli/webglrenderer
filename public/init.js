@@ -6,6 +6,7 @@ export default () => {
 	camera.aspect = renderer.width / renderer.height;
 	camera.updateProjectionMatrix();
 	// camera.position.set(0, PLAYER_HEIGHT, 0);
+	camera.rotation.set(0, 0, 0);
 
 	scene.background = new Color(0x151515);
 
@@ -125,7 +126,18 @@ export default () => {
 
 
 
-	// Panorama cubemap tests
+	/**
+	 * @summary Panorama cubemap tests
+	 * 
+	 * Observations:
+	 * - The cubemap faces must be squares, with the camera in the center of the cubemap (here (0, 0)).
+	 * - Beware of the Y swapping of the textures (I fixed this by rearranging the UVs)
+	 * 
+	 * Values:
+	 * - FOV = 85
+	 * - X angle = -PI / 6
+	 * - The Y angle is modified each frame. Example of a valid Y value = 2.28
+	 */
 	{
 		const
 			textures = [
@@ -136,34 +148,40 @@ export default () => {
 				new Texture("panorama_4.png"),
 				new Texture("panorama_5.png"),
 			],
-			geometry = new PlaneGeometry(400, 400),
+			geometry = new PlaneGeometry(16, 16),
 			meshes = Array.from({length: 6}, (_, i) => new Mesh(
 				geometry,
+				// new Material({color: new Color(0xff9800)}),
 				new Material({texture: textures[i]}),
 			)),
 			light = new PointLight(0xffffff, 1.2);
 
 		// UVs
-		for (const mesh of meshes) mesh.geometry.uvs = new Float32Array([0, 0, 0, 1, 1, 0, 1, 1]);
+		for (const mesh of meshes) mesh.geometry.uvs = new Float32Array([
+			1, 0,
+			1, 1,
+			0, 0,
+			0, 1,
+		]);
 
 		// Position/angle
 		{
-			meshes[0].position.z = 200;
+			meshes[0].position.z = 8;
 			meshes[0].rotation.set(0, Math.PI / 2, Math.PI / 2);
 
-			meshes[1].position.x = -200;
-			meshes[1].rotation.set(0, 0, Math.PI / 2);
+			meshes[1].position.x = 8;
+			meshes[1].rotation.set(Math.PI, 0, -Math.PI / 2);
 
-			meshes[2].position.z = -200;
+			meshes[2].position.z = -8;
 			meshes[2].rotation.set(0, -Math.PI / 2, Math.PI / 2);
 
-			meshes[3].position.x = 200;
-			meshes[3].rotation.set(Math.PI, 0, -Math.PI / 2);
+			meshes[3].position.x = -8;
+			meshes[3].rotation.set(0, 0, Math.PI / 2);
 
-			meshes[4].position.y = 200;
+			meshes[4].position.y = 8;
 			meshes[4].rotation.set(Math.PI, Math.PI / 2, 0);
 
-			meshes[5].position.y = -200;
+			meshes[5].position.y = -8;
 			meshes[5].rotation.set(0, Math.PI / 2, 0);
 		}
 
