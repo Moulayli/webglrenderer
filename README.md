@@ -1,5 +1,5 @@
 WebGL2 renderer.  
-https://matteokeole.github.io/jsrenderer
+https://matteokeole.github.io/webglrenderer
 
 Controls:
 - Walk forward: W
