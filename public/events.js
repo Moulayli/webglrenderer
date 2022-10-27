@@ -51,5 +51,5 @@ document.addEventListener("pointerlockchange", pointerLockChange);
 		debug.textContent = spinValue = this.value;
 	});
 
-	// vid.playbackRate = 8;
+	vid.playbackRate = 12;
 }
