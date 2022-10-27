@@ -1,17 +1,11 @@
-import {TEXTURES, TEXTURE_PATH, Loader} from "../index.js";
+import {TEXTURES, TEXTURE_PATH} from "../index.js";
 
 /**
- * Utility class for loading textures asynchronously.
+ * Utility class for asynchronous texture loading and preparing.
  * 
  * @constructor
- * @param	{boolean}	[logs=false]	Whether to display advancement logs in the console
- * @returns	{TextureLoader}
  */
-export class TextureLoader extends Loader {
-	constructor() {
-		super();
-	}
-
+export function TextureLoader() {
 	/**
 	 * Loads the given sources into actual images.
 	 * 
@@ -19,7 +13,7 @@ export class TextureLoader extends Loader {
 	 * @param	{WebGL2RenderingContext}	gl		WebGL context
 	 * @param	{array}						sources	Sources to load
 	 */
-	async load(gl, sources) {
+	this.load = async function(gl, sources) {
 		const now = performance.now();
 		let image, texture;
 
@@ -41,9 +35,16 @@ export class TextureLoader extends Loader {
 				new Uint8Array([1, 1, 1, 1]),
 			);
 
-			image = await load(source);
+			try {
+				image = await load(image, source);
+			} catch (error) {
+				continue;
+			}
+
+			console.log(`%c${source} loaded`, "color: #777; font-style: italic");
 
 			setTexParameteri(gl, "norepeat");
+			setTexParameteri(gl, "pixelated");
 
 			gl.texImage2D(
 				gl.TEXTURE_2D,
@@ -66,23 +67,18 @@ export class TextureLoader extends Loader {
  * Loads an image asynchronously and returns it.
  * 
  * @async
+ * @param	{Image}		image	Image element
  * @param	{string}	source	Image path
- * @returns	{Image}
+ * @return	{Image}
  */
-const load = async source => {
-	const image = new Image();
+async function load(image, source) {
+	image = new Image();
 	image.src = TEXTURE_PATH + source;
 
-	try {
-		await image.decode();
-	} catch (error) {
-		console.error(`Could not load ${image.src}: the resource was not found.`);
-	}
-
-	console.log(`%c${source} loaded`, "color: #777; font-style: italic");
+	await image.decode();
 
 	return image;
-};
+}
 
 /**
  * Applies a texture parameter to the current TEXTURE_2D.
@@ -90,7 +86,7 @@ const load = async source => {
  * @param	{WebGL2RenderingContext}	gl		WebGL context
  * @param	{string}					param	Parameter name
  */
-const setTexParameteri = (gl, param) => {
+function setTexParameteri(gl, param) {
 	// gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
 
 	switch (param) {
@@ -104,4 +100,4 @@ const setTexParameteri = (gl, param) => {
 
 			break;
 	}
-};
+}
